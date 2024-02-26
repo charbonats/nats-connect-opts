@@ -1,8 +1,26 @@
 from __future__ import annotations
 
+from typing import TypeVar, overload
+
 from nats.aio.client import Client
 
-from .options import ConnectOption, ConnectOpts
+from .connect_opts import ConnectOption, ConnectOpts
+
+CT = TypeVar("CT", bound=Client)
+
+
+@overload
+async def connect(
+    *opt: ConnectOption,
+    client: None = None,
+) -> Client: ...
+
+
+@overload
+async def connect(
+    *opt: ConnectOption,
+    client: CT,
+) -> CT: ...
 
 
 async def connect(

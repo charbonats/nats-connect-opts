@@ -96,7 +96,12 @@ class ConnectOpts:
     reconnected_cb: Callable[[], Awaitable[None]] | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        ctx = self.tls
+        self.tls = None
+        opts = asdict(self)
+        if ctx:
+            opts["tls"] = ctx
+        return opts
 
     @classmethod
     def from_dict(cls, opts: dict[str, Any]) -> ConnectOpts:

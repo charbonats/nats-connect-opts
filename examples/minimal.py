@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from nats_contrib.connect_opts import connect, options
+from nats_contrib.connect_opts import connect, option
 
 
 async def main() -> None:
@@ -8,21 +8,21 @@ async def main() -> None:
 
     client = await connect(
         # Configure the servers
-        options.WithServers(
+        option.WithServers(
             [
                 "nats://localhost:4222",
                 "nats://localhost:4223",
             ]
         ),
         # Configure the reconnect strategy
-        options.WithAllowReconnect(
+        option.WithAllowReconnect(
             max_attempts=10,
             delay_seconds=0.5,
         ),
         # Configure the connection name
-        options.WithConnectionName("my-connection"),
+        option.WithConnectionName("my-connection"),
         # Configure the flusher
-        options.WithFlusher(
+        option.WithFlusher(
             queue_size=100,
             timeout_seconds=10,
         ),
