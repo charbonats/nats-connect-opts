@@ -4,7 +4,7 @@
     This is a personal project and is not endorsed by the NATS.io community. It is not guaranteed to be maintained or supported.
 
 !!! bug "This is an experimental project"
-    This project is a prototype and should not be used for anything serious. It is not tested, nor is it guaranteed to be correct.
+    This project is a prototype and should not be used for anything serious. It is not well tested, nor is it guaranteed to be correct.
 
 The [nats.go](https://github.com/nats-io/nats.go) package ([Go](https://go.dev/) client for NATS) provides a simple way to configure connect options using the [Options pattern](https://golang.cafe/blog/golang-functional-options-pattern.html)
 
@@ -23,7 +23,7 @@ This project is an attempt to implement the same API in Python.
 <!-- termynal -->
 
 ```bash
-$ pip install git+https://github.com/charbonnierg/nats-connect-opts.git
+$ pip install nats-connect-opts
 ```
 
 ## Example usage
@@ -31,8 +31,7 @@ $ pip install git+https://github.com/charbonnierg/nats-connect-opts.git
 ``` py linenums="1" title="examples/minimal.py"
 from __future__ import annotations
 
-
-from nats_contrib.connect_opts import connect, options
+from nats_contrib.connect_opts import connect, option
 
 
 async def main() -> None:
@@ -40,21 +39,21 @@ async def main() -> None:
 
     client = await connect(
         # Configure the servers
-        options.WithServers(
+        option.WithServers(
             [
                 "nats://localhost:4222",
                 "nats://localhost:4223",
             ]
         ),
         # Configure the reconnect strategy
-        options.WithAllowReconnect(
+        option.WithAllowReconnect(
             max_attempts=10,
             delay_seconds=0.5,
         ),
         # Configure the connection name
-        options.WithConnectionName("my-connection"),
+        option.WithConnectionName("my-connection"),
         # Configure the flusher
-        options.WithFlusher(
+        option.WithFlusher(
             queue_size=100,
             timeout_seconds=10,
         ),
